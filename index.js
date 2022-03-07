@@ -9,20 +9,19 @@ const userRoute = require("./routes/user")
 const authRoute = require("./routes/auth")
 const postRoute = require("./routes/post")
 
+dotenv.config()
+
 mongoose.connect(
     process.env.MONGO_URL,
     { useNewUrlParser: true, useUnifiedTopology: true },
-    () => {
-        console.log("Connected to MongoDB")
-    }
-)
 
-dotenv.config()
+)
+    .then(() => console.log('connected'))
+    .catch(e => console.log(e));
 
 app.use(express.json())
-app.use(helmet)
+app.use(helmet())
 app.use(morgan('dev'))
-
 
 app.use('/api/user', userRoute)
 app.use('/api/auth', authRoute)
